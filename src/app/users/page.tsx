@@ -17,9 +17,17 @@ export default async function UsersPage() {
       email: `user${i + 1}@example.com`,
       gender: i % 2 === 0 ? 'Male' : 'Female',
       age: 20 + (i % 30),
+      lifestyle_self: i % 2 === 0 ? 'Active' : 'Sedentary',
+      sugar_preference: i % 3 === 0 ? 'Low' : 'Medium',
       weight_goal: i % 3 === 0 ? 'Lose Weight' : i % 3 === 1 ? 'Build Muscle' : 'Maintain',
+      calorie_goal: 2000 + (i * 100),
       device_brand: i % 4 === 0 ? 'Samsung' : 'Apple',
       device_model: i % 4 === 0 ? 'Galaxy S24' : 'iPhone 15 Pro',
+      device_os: i % 4 === 0 ? 'Android' : 'iOS',
+      device_os_version: '17.4',
+      app_version: '1.0.2',
+      timezone: 'Europe/Berlin',
+      locale: 'de-DE',
       created_at: new Date(baseTime - (i * 86400000)).toISOString()
     }))
   } else {

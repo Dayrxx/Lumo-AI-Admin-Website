@@ -79,19 +79,38 @@ export function UsersClient({ initialUsers }: { initialUsers: any[] }) {
                     </div>
                   </td>
                   <td className="whitespace-nowrap px-3 py-4">
-                    <div className="text-sm text-slate-900">{person.gender || '-'}</div>
-                    <div className="text-xs text-slate-500">{person.age ? `${person.age} years` : '-'}</div>
+                    <div className="text-sm text-slate-900">
+                      {person.gender || '-'} • {person.age ? `${person.age}y` : '-'}
+                    </div>
+                    <div className="text-xs text-slate-500 mt-0.5">
+                      {person.lifestyle_self || 'No lifestyle'} • {person.sugar_preference || 'No pref'}
+                    </div>
                   </td>
                   <td className="whitespace-nowrap px-3 py-4">
-                    <span className="inline-flex items-center rounded-full bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
-                      {person.weight_goal || 'None'}
-                    </span>
+                    <div className="flex flex-col items-start gap-1">
+                      <span className="inline-flex items-center rounded-full bg-blue-50 px-2 py-0.5 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
+                        {person.weight_goal || 'No goal'}
+                      </span>
+                      <span className="text-xs text-slate-500">
+                        {person.calorie_goal ? `${person.calorie_goal} kcal` : '-'}
+                      </span>
+                    </div>
                   </td>
-                  <td className="whitespace-nowrap px-3 py-4 text-sm text-slate-500">
-                    {person.device_brand} {person.device_model}
+                  <td className="whitespace-nowrap px-3 py-4">
+                    <div className="text-sm text-slate-900">
+                      {person.device_brand} {person.device_model}
+                    </div>
+                    <div className="text-xs text-slate-500 mt-0.5">
+                      {person.device_os} {person.device_os_version} • v{person.app_version}
+                    </div>
                   </td>
-                  <td className="whitespace-nowrap px-3 py-4 text-sm text-slate-500">
-                    {new Date(person.created_at).toLocaleDateString()}
+                  <td className="whitespace-nowrap px-3 py-4">
+                    <div className="text-sm text-slate-900">
+                      {new Date(person.created_at).toLocaleDateString()}
+                    </div>
+                    <div className="text-xs text-slate-500 mt-0.5">
+                      {person.timezone || person.locale || '-'}
+                    </div>
                   </td>
                 </tr>
               ))}
