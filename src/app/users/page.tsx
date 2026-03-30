@@ -5,19 +5,21 @@ export default async function UsersPage() {
   const cookieStore = await cookies()
   const isDemo = cookieStore.get('demo_mode')?.value === 'true'
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let users: any[] = []
   let error = null
 
   if (isDemo) {
+    const baseTime = 1711843200000
     users = Array.from({ length: 15 }).map((_, i) => ({
       id: `demo-user-${i}`,
       email: `user${i + 1}@example.com`,
       gender: i % 2 === 0 ? 'Male' : 'Female',
-      age: 20 + Math.floor(Math.random() * 30),
+      age: 20 + (i % 30),
       weight_goal: i % 3 === 0 ? 'Lose Weight' : i % 3 === 1 ? 'Build Muscle' : 'Maintain',
       device_brand: i % 4 === 0 ? 'Samsung' : 'Apple',
       device_model: i % 4 === 0 ? 'Galaxy S24' : 'iPhone 15 Pro',
-      created_at: new Date(Date.now() - Math.random() * 10000000000).toISOString()
+      created_at: new Date(baseTime - (i * 86400000)).toISOString()
     }))
   } else {
     const { data, error: fetchError } = await supabaseAdmin

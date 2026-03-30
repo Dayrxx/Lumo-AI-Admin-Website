@@ -43,10 +43,10 @@ export function Sidebar({ isDemoMode: initialDemoMode }: { isDemoMode: boolean }
     <div className="flex w-64 flex-col bg-white border-r border-slate-200 text-slate-600 transition-all duration-300 shadow-sm z-10">
       <div className="flex h-20 shrink-0 items-center px-6 border-b border-slate-100 bg-white">
         <Image 
-          src="/lumodash.png" 
+          src="/lumodash.jpg" 
           alt="LumoDash Logo" 
-          width={150} 
-          height={40} 
+          width={180} 
+          height={60} 
           className="object-contain"
           priority
         />

@@ -39,7 +39,7 @@ async function getRevenueCatMetrics(isDemo: boolean) {
 
     const data = await res.json()
     return { data }
-  } catch (err) {
+  } catch {
     return { error: 'Failed to connect to RevenueCat API.' }
   }
 }
@@ -66,7 +66,7 @@ export default async function RevenuePage() {
         <div>
           <h1 className="text-2xl font-bold text-slate-900">RevenueCat Metrics</h1>
           <p className="mt-1 text-sm text-slate-500">
-            Overview of your app's financial performance directly from RevenueCat.
+            Overview of your app&apos;s financial performance directly from RevenueCat.
           </p>
         </div>
       </div>
@@ -83,7 +83,7 @@ export default async function RevenuePage() {
                 <ol className="list-decimal ml-4 mt-2 space-y-1">
                   <li>Go to RevenueCat Dashboard</li>
                   <li>Navigate to Project Settings  API Keys</li>
-                  <li>Generate a new "v2" Secret API Key</li>
+                  <li>Generate a new &quot;v2&quot; Secret API Key</li>
                   <li>Update your <code>.env.local</code> file: <code>REVENUECAT_SECRET_KEY=...</code></li>
                 </ol>
               </div>

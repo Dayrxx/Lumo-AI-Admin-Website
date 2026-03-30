@@ -15,7 +15,7 @@ export default function LoginPage({
         <div className="flex flex-col items-center">
           <div className="bg-white p-4 rounded-2xl mb-6 w-full flex justify-center border border-slate-100 shadow-sm">
             <Image 
-              src="/lumodash.png" 
+              src="/lumodash.jpg" 
               alt="LumoDash Logo" 
               width={180} 
               height={48} 

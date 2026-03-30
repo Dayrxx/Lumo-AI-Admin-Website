@@ -5,19 +5,21 @@ export default async function SubscriptionsPage() {
   const cookieStore = await cookies()
   const isDemo = cookieStore.get('demo_mode')?.value === 'true'
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let subscriptions: any[] = []
   let error = null
 
   if (isDemo) {
+    const baseTime = 1711843200000
     subscriptions = Array.from({ length: 15 }).map((_, i) => ({
-      app_user_id: `user_${Math.random().toString(36).substring(7)}`,
+      app_user_id: `user_demo_${i}`,
       email: `user${i + 1}@example.com`,
       is_pro: i % 4 !== 0,
       product_identifier: i % 3 === 0 ? 'lumo_pro_yearly' : i % 3 === 1 ? 'lumo_pro_monthly' : 'lumo_pro_weekly',
       period_type: i % 3 === 0 ? 'yearly' : i % 3 === 1 ? 'monthly' : 'weekly',
       will_renew: i % 5 !== 0,
-      expires_date: new Date(Date.now() + Math.random() * 10000000000).toISOString(),
-      created_at: new Date(Date.now() - Math.random() * 10000000000).toISOString()
+      expires_date: new Date(baseTime + (i * 86400000)).toISOString(),
+      created_at: new Date(baseTime - (i * 86400000)).toISOString()
     }))
   } else {
     const { data, error: fetchError } = await supabaseAdmin

@@ -115,7 +115,7 @@ export default async function OverviewPage({
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-slate-900">Overview</h1>
-          <p className="text-sm text-slate-500 mt-1">Track your app's performance and growth.</p>
+          <p className="text-sm text-slate-500 mt-1">Track your app&apos;s performance and growth.</p>
         </div>
         <DateRangePicker />
       </div>
@@ -164,15 +164,17 @@ export default async function OverviewPage({
 }
 
 async function RecentSignups({ isDemo }: { isDemo: boolean }) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   let recentSignups: any[] = []
 
   if (isDemo) {
+    const baseTime = 1711843200000 // Fixed timestamp for demo
     recentSignups = [
-      { id: '1', email: 'alex.smith@example.com', created_at: new Date().toISOString(), device_os: 'iOS 17.4' },
-      { id: '2', email: 'sarah.j@example.com', created_at: new Date(Date.now() - 3600000).toISOString(), device_os: 'iOS 17.3' },
-      { id: '3', email: 'mike.williams@example.com', created_at: new Date(Date.now() - 7200000).toISOString(), device_os: 'Android 14' },
-      { id: '4', email: 'emily.brown@example.com', created_at: new Date(Date.now() - 10800000).toISOString(), device_os: 'iOS 17.4' },
-      { id: '5', email: 'david.c@example.com', created_at: new Date(Date.now() - 14400000).toISOString(), device_os: 'Android 13' },
+      { id: '1', email: 'alex.smith@example.com', created_at: new Date(baseTime).toISOString(), device_os: 'iOS 17.4' },
+      { id: '2', email: 'sarah.j@example.com', created_at: new Date(baseTime - 3600000).toISOString(), device_os: 'iOS 17.3' },
+      { id: '3', email: 'mike.williams@example.com', created_at: new Date(baseTime - 7200000).toISOString(), device_os: 'Android 14' },
+      { id: '4', email: 'emily.brown@example.com', created_at: new Date(baseTime - 10800000).toISOString(), device_os: 'iOS 17.4' },
+      { id: '5', email: 'david.c@example.com', created_at: new Date(baseTime - 14400000).toISOString(), device_os: 'Android 13' },
     ]
   } else {
     const { data } = await supabaseAdmin
