@@ -41,7 +41,7 @@ export async function getAppleApps() {
   if (!token) return null
 
   try {
-    const response = await fetch('https://api.appstoreconnect.apple.com/v1/apps', {
+    const response = await fetch('https://api.appstoreconnect.apple.com/v1/apps?filter[bundleId]=ai.lumo.productscanner', {
       headers: {
         'Authorization': `Bearer ${token}`
       },
@@ -54,6 +54,31 @@ export async function getAppleApps() {
     return data.data
   } catch (error) {
     console.error('Error fetching Apple apps:', error)
+    return null
+  }
+}
+
+export async function getAppleAppMetrics(appId: string) {
+  const token = await getAppleToken()
+  if (!token) return null
+
+  try {
+    // Note: To get real metrics like downloads, sessions, crashes, we need to use the Analytics API
+    // The App Store Connect API requires specific endpoints and parameters for metrics
+    // For now, we'll fetch basic app info and app store versions as a starting point
+    const response = await fetch(`https://api.appstoreconnect.apple.com/v1/apps/${appId}?include=appStoreVersions,appInfos`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      },
+      next: { revalidate: 3600 }
+    })
+
+    if (!response.ok) return null
+
+    const data = await response.json()
+    return data
+  } catch (error) {
+    console.error('Error fetching Apple metrics:', error)
     return null
   }
 }

@@ -1,9 +1,9 @@
 import { supabaseAdmin } from '@/utils/supabase/admin'
 import { DateRangePicker } from '@/components/DateRangePicker'
 import { getDateRange } from '@/utils/date'
-import { ArrowDownToLine, DollarSign, Users, Activity, TrendingUp, CheckCircle2 } from 'lucide-react'
+import { ArrowDownToLine, DollarSign, Users, Activity, TrendingUp, CheckCircle2, Smartphone, Star, ShieldCheck } from 'lucide-react'
 import { cookies } from 'next/headers'
-import { getAppleApps } from '@/utils/apple'
+import { getAppleApps, getAppleAppMetrics } from '@/utils/apple'
 
 export default async function OverviewPage({
   searchParams,
@@ -22,8 +22,14 @@ export default async function OverviewPage({
   let estimatedRevenue = 0
   let conversionRate = '0.0'
 
-  // Fetch Apple Apps
+  // Fetch Apple Apps (Filtered to ai.lumo.productscanner)
   const appleApps = await getAppleApps()
+  const lumoApp = appleApps?.[0]
+  
+  let appleMetrics = null
+  if (lumoApp) {
+    appleMetrics = await getAppleAppMetrics(lumoApp.id)
+  }
 
   if (isDemo) {
     // Generate realistic fake data based on range
@@ -104,6 +110,10 @@ export default async function OverviewPage({
     },
   ]
 
+  // Extract version info if available
+  const latestVersion = appleMetrics?.included?.find((inc: any) => inc.type === 'appStoreVersions')?.attributes?.versionString || '1.0.0'
+  const appState = appleMetrics?.included?.find((inc: any) => inc.type === 'appStoreVersions')?.attributes?.appStoreState || 'READY_FOR_SALE'
+
   return (
     <div className="p-8 max-w-7xl mx-auto space-y-8">
       {isDemo && (
@@ -141,111 +151,105 @@ export default async function OverviewPage({
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6">
+        {/* Lumo App Status Widget */}
+        <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 h-full">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-lg font-bold text-slate-900">Recent Signups</h2>
-            <Users className="h-5 w-5 text-slate-400" />
+            <h2 className="text-lg font-bold text-slate-900">App Store Status</h2>
+            <Smartphone className="h-5 w-5 text-slate-400" />
           </div>
-          <RecentSignups isDemo={isDemo} />
-        </div>
-
-        {appleApps ? (
-          <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 h-full">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-lg font-bold text-slate-900">App Store Connect</h2>
-              <CheckCircle2 className="h-5 w-5 text-emerald-500" />
-            </div>
-            <div className="space-y-4">
-              <div className="flex items-center gap-3 p-3 bg-emerald-50 text-emerald-700 rounded-xl text-sm font-medium">
-                <span className="flex h-2 w-2 relative">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
-                </span>
-                Connected successfully
-              </div>
-              <div className="mt-4">
-                <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">Your Apps</h3>
-                <div className="space-y-2">
-                  {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                  {appleApps.map((app: any) => (
-                    <div key={app.id} className="flex items-center justify-between p-3 border border-slate-100 rounded-xl">
-                      <div>
-                        <p className="text-sm font-medium text-slate-900">{app.attributes.name}</p>
-                        <p className="text-xs text-slate-500">{app.attributes.bundleId}</p>
-                      </div>
-                      <span className="text-xs font-medium text-slate-400 bg-slate-50 px-2 py-1 rounded-md">
-                        {app.attributes.sku}
-                      </span>
-                    </div>
-                  ))}
+          
+          {lumoApp ? (
+            <div className="space-y-6">
+              <div className="flex items-center gap-4">
+                <div className="h-16 w-16 bg-gradient-to-br from-emerald-400 to-emerald-600 rounded-2xl shadow-sm flex items-center justify-center text-white">
+                  <span className="text-2xl font-bold">L</span>
+                </div>
+                <div>
+                  <h3 className="text-lg font-bold text-slate-900">{lumoApp.attributes.name}</h3>
+                  <p className="text-sm text-slate-500">{lumoApp.attributes.bundleId}</p>
                 </div>
               </div>
+
+              <div className="grid grid-cols-2 gap-4">
+                <div className="bg-slate-50 rounded-xl p-4 border border-slate-100">
+                  <div className="flex items-center gap-2 text-slate-500 mb-1">
+                    <ShieldCheck className="h-4 w-4" />
+                    <span className="text-xs font-medium uppercase tracking-wider">Status</span>
+                  </div>
+                  <div className="text-sm font-semibold text-slate-900 flex items-center gap-2">
+                    <div className={`h-2 w-2 rounded-full ${appState === 'READY_FOR_SALE' ? 'bg-emerald-500' : 'bg-amber-500'}`}></div>
+                    {appState.replace(/_/g, ' ')}
+                  </div>
+                </div>
+                
+                <div className="bg-slate-50 rounded-xl p-4 border border-slate-100">
+                  <div className="flex items-center gap-2 text-slate-500 mb-1">
+                    <Star className="h-4 w-4" />
+                    <span className="text-xs font-medium uppercase tracking-wider">Current Version</span>
+                  </div>
+                  <div className="text-sm font-semibold text-slate-900">
+                    v{latestVersion}
+                  </div>
+                </div>
+              </div>
+              
+              <div className="pt-4 border-t border-slate-100 flex justify-between items-center text-sm">
+                <span className="text-slate-500">SKU</span>
+                <span className="font-medium text-slate-900">{lumoApp.attributes.sku}</span>
+              </div>
             </div>
+          ) : (
+            <div className="flex flex-col items-center justify-center h-48 text-center">
+              <div className="h-12 w-12 bg-slate-100 rounded-full flex items-center justify-center mb-3">
+                <Smartphone className="h-6 w-6 text-slate-400" />
+              </div>
+              <p className="text-slate-500 text-sm max-w-[250px]">
+                Connect your Apple Developer account to see live app status.
+              </p>
+            </div>
+          )}
+        </div>
+
+        {/* Database Stats Widget */}
+        <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 h-full">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-lg font-bold text-slate-900">Database Insights</h2>
+            <Users className="h-5 w-5 text-slate-400" />
           </div>
-        ) : (
-          <div className="bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl shadow-sm p-6 text-white h-full">
-            <h2 className="text-lg font-bold mb-2">Connect Apple App Store</h2>
-            <p className="text-indigo-100 text-sm mb-6">
-              To get exact App Download numbers and official Revenue data, add your Apple App Store Connect API keys to the environment variables.
-            </p>
-            <div className="bg-white/10 rounded-xl p-4 backdrop-blur-sm">
-              <code className="text-xs text-indigo-50">
-                APPLE_ISSUER_ID=...<br/>
-                APPLE_KEY_ID=...<br/>
-                APPLE_PRIVATE_KEY=...
-              </code>
+          
+          <div className="space-y-4">
+            <div className="flex justify-between items-center p-4 bg-indigo-50/50 rounded-xl border border-indigo-100/50">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-white rounded-lg shadow-sm">
+                  <Users className="h-4 w-4 text-indigo-600" />
+                </div>
+                <span className="font-medium text-slate-700">Total Registered Users</span>
+              </div>
+              <span className="text-lg font-bold text-indigo-900">{isDemo ? '12,450' : signupsCount.toLocaleString()}</span>
             </div>
-          </div>
-        )}
-      </div>
-    </div>
-  )
-}
-
-async function RecentSignups({ isDemo }: { isDemo: boolean }) {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  let recentSignups: any[] = []
-
-  if (isDemo) {
-    const baseTime = 1711843200000 // Fixed timestamp for demo
-    recentSignups = [
-      { id: '1', email: 'alex.smith@example.com', created_at: new Date(baseTime).toISOString(), device_os: 'iOS 17.4' },
-      { id: '2', email: 'sarah.j@example.com', created_at: new Date(baseTime - 3600000).toISOString(), device_os: 'iOS 17.3' },
-      { id: '3', email: 'mike.williams@example.com', created_at: new Date(baseTime - 7200000).toISOString(), device_os: 'Android 14' },
-      { id: '4', email: 'emily.brown@example.com', created_at: new Date(baseTime - 10800000).toISOString(), device_os: 'iOS 17.4' },
-      { id: '5', email: 'david.c@example.com', created_at: new Date(baseTime - 14400000).toISOString(), device_os: 'Android 13' },
-    ]
-  } else {
-    const { data } = await supabaseAdmin
-      .from('profiles')
-      .select('id, email, created_at, device_os')
-      .order('created_at', { ascending: false })
-      .limit(5)
-    recentSignups = data || []
-  }
-
-  if (!recentSignups || recentSignups.length === 0) {
-    return <p className="text-sm text-slate-500 text-center py-4">No recent signups.</p>
-  }
-
-  return (
-    <div className="space-y-4">
-      {recentSignups.map((user) => (
-        <div key={user.id} className="flex items-center justify-between p-3 hover:bg-slate-50 rounded-xl transition-colors">
-          <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-bold">
-              {user.email?.charAt(0).toUpperCase() || '?'}
+            
+            <div className="flex justify-between items-center p-4 bg-emerald-50/50 rounded-xl border border-emerald-100/50">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-white rounded-lg shadow-sm">
+                  <TrendingUp className="h-4 w-4 text-emerald-600" />
+                </div>
+                <span className="font-medium text-slate-700">Active Pro Subscriptions</span>
+              </div>
+              <span className="text-lg font-bold text-emerald-900">{isDemo ? '3,120' : newSubscriptionsCount.toLocaleString()}</span>
             </div>
-            <div>
-              <p className="text-sm font-medium text-slate-900">{user.email || 'Anonymous'}</p>
-              <p className="text-xs text-slate-500">{user.device_os || 'Unknown Device'}</p>
+
+            <div className="flex justify-between items-center p-4 bg-purple-50/50 rounded-xl border border-purple-100/50">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-white rounded-lg shadow-sm">
+                  <Activity className="h-4 w-4 text-purple-600" />
+                </div>
+                <span className="font-medium text-slate-700">Avg. Conversion Rate</span>
+              </div>
+              <span className="text-lg font-bold text-purple-900">{isDemo ? '25.1%' : `${conversionRate}%`}</span>
             </div>
-          </div>
-          <div className="text-xs text-slate-400">
-            {new Date(user.created_at).toLocaleDateString()}
           </div>
         </div>
-      ))}
+      </div>
     </div>
   )
 }
