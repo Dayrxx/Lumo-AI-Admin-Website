@@ -45,13 +45,13 @@ export function SubscriptionsClient({ initialSubscriptions }: { initialSubscript
           />
         </div>
         
-        <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2 text-sm text-slate-600 bg-white border border-slate-200 rounded-xl px-3 py-2 shadow-sm">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 w-full sm:w-auto">
+          <div className="flex items-center gap-2 text-sm text-slate-600 bg-white border border-slate-200 rounded-xl px-3 py-2 shadow-sm w-full sm:w-auto">
             <Filter className="h-4 w-4 text-slate-400" />
             <select 
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="bg-transparent border-none focus:ring-0 p-0 text-sm cursor-pointer outline-none"
+              className="bg-transparent border-none focus:ring-0 p-0 text-sm cursor-pointer outline-none w-full"
             >
               <option value="all">All Status</option>
               <option value="pro">Pro Only</option>
