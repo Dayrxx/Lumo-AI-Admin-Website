@@ -1,7 +1,7 @@
 import { supabaseAdmin } from '@/utils/supabase/admin'
 import { DateRangePicker } from '@/components/DateRangePicker'
 import { getDateRange } from '@/utils/date'
-import { ArrowDownToLine, DollarSign, Users, Activity, TrendingUp, CheckCircle2, Smartphone, Star, ShieldCheck } from 'lucide-react'
+import { ArrowDownToLine, DollarSign, Users, Activity, TrendingUp, Smartphone, Star, ShieldCheck } from 'lucide-react'
 import { cookies } from 'next/headers'
 import { getAppleApps, getAppleAppMetrics } from '@/utils/apple'
 
@@ -111,7 +111,9 @@ export default async function OverviewPage({
   ]
 
   // Extract version info if available
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const latestVersion = appleMetrics?.included?.find((inc: any) => inc.type === 'appStoreVersions')?.attributes?.versionString || '1.0.0'
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const appState = appleMetrics?.included?.find((inc: any) => inc.type === 'appStoreVersions')?.attributes?.appStoreState || 'READY_FOR_SALE'
 
   return (

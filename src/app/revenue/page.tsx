@@ -1,4 +1,4 @@
-import { DollarSign, TrendingUp, Users, AlertCircle, RefreshCw, Activity, ArrowUpRight } from 'lucide-react'
+import { DollarSign, TrendingUp, Users, AlertCircle, RefreshCw, Activity, ArrowUpRight, ArrowDownToLine } from 'lucide-react'
 import { cookies } from 'next/headers'
 
 async function getRevenueCatMetrics(isDemo: boolean) {
