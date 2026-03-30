@@ -22,9 +22,9 @@ export default async function RootLayout({
   return (
     <html lang="en" className="h-full bg-[#F8FAFC]">
       <body className={`${inter.className} h-full text-slate-900 overflow-hidden`}>
-        <div className="flex h-full flex-col md:flex-row">
+        <div className="flex h-[100dvh] flex-col md:flex-row">
           <Sidebar isDemoMode={isDemoMode} />
-          <main className="flex-1 overflow-y-auto bg-[#F8FAFC]">
+          <main className="flex-1 overflow-y-auto bg-[#F8FAFC] pb-safe">
             {children}
           </main>
         </div>
