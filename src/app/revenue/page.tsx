@@ -96,100 +96,100 @@ export default async function RevenuePage() {
           </div>
         </div>
       ) : (
-        <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
+        <div className="grid grid-cols-2 gap-3 sm:gap-6 lg:grid-cols-4">
+          <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
             <div className="flex items-center">
-              <div className="p-3 rounded-xl bg-emerald-100">
-                <TrendingUp className="h-6 w-6 text-emerald-600" />
+              <div className="p-2 sm:p-3 rounded-xl bg-emerald-100">
+                <TrendingUp className="h-5 w-5 sm:h-6 sm:w-6 text-emerald-600" />
               </div>
             </div>
-            <div className="mt-4">
-              <p className="text-sm font-medium text-slate-500">MRR</p>
-              <p className="text-3xl font-bold text-slate-900 mt-1">${data?.mrr?.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) || '0.00'}</p>
+            <div className="mt-3 sm:mt-4">
+              <p className="text-xs sm:text-sm font-medium text-slate-500">MRR</p>
+              <p className="text-xl sm:text-3xl font-bold text-slate-900 mt-1">${data?.mrr?.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) || '0.00'}</p>
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
+          <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
             <div className="flex items-center">
-              <div className="p-3 rounded-xl bg-blue-100">
-                <DollarSign className="h-6 w-6 text-blue-600" />
+              <div className="p-2 sm:p-3 rounded-xl bg-blue-100">
+                <DollarSign className="h-5 w-5 sm:h-6 sm:w-6 text-blue-600" />
               </div>
             </div>
-            <div className="mt-4">
-              <p className="text-sm font-medium text-slate-500">Revenue (28d)</p>
-              <p className="text-3xl font-bold text-slate-900 mt-1">${data?.revenue_28d?.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) || '0.00'}</p>
+            <div className="mt-3 sm:mt-4">
+              <p className="text-xs sm:text-sm font-medium text-slate-500">Revenue (28d)</p>
+              <p className="text-xl sm:text-3xl font-bold text-slate-900 mt-1">${data?.revenue_28d?.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) || '0.00'}</p>
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
+          <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
             <div className="flex items-center">
-              <div className="p-3 rounded-xl bg-indigo-100">
-                <Users className="h-6 w-6 text-indigo-600" />
+              <div className="p-2 sm:p-3 rounded-xl bg-indigo-100">
+                <Users className="h-5 w-5 sm:h-6 sm:w-6 text-indigo-600" />
               </div>
             </div>
-            <div className="mt-4">
-              <p className="text-sm font-medium text-slate-500">Active Subscriptions</p>
-              <p className="text-3xl font-bold text-slate-900 mt-1">{data?.active_subscriptions?.toLocaleString() || '0'}</p>
+            <div className="mt-3 sm:mt-4">
+              <p className="text-xs sm:text-sm font-medium text-slate-500">Active Subs</p>
+              <p className="text-xl sm:text-3xl font-bold text-slate-900 mt-1">{data?.active_subscriptions?.toLocaleString() || '0'}</p>
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
+          <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
             <div className="flex items-center">
-              <div className="p-3 rounded-xl bg-purple-100">
-                <RefreshCw className="h-6 w-6 text-purple-600" />
+              <div className="p-2 sm:p-3 rounded-xl bg-purple-100">
+                <RefreshCw className="h-5 w-5 sm:h-6 sm:w-6 text-purple-600" />
               </div>
             </div>
-            <div className="mt-4">
-              <p className="text-sm font-medium text-slate-500">Active Trials</p>
-              <p className="text-3xl font-bold text-slate-900 mt-1">{data?.active_trials?.toLocaleString() || '0'}</p>
+            <div className="mt-3 sm:mt-4">
+              <p className="text-xs sm:text-sm font-medium text-slate-500">Active Trials</p>
+              <p className="text-xl sm:text-3xl font-bold text-slate-900 mt-1">{data?.active_trials?.toLocaleString() || '0'}</p>
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
+          <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
             <div className="flex items-center">
-              <div className="p-3 rounded-xl bg-amber-100">
-                <ArrowDownToLine className="h-6 w-6 text-amber-600" />
+              <div className="p-2 sm:p-3 rounded-xl bg-amber-100">
+                <ArrowDownToLine className="h-5 w-5 sm:h-6 sm:w-6 text-amber-600" />
               </div>
             </div>
-            <div className="mt-4">
-              <p className="text-sm font-medium text-slate-500">Installs (28d)</p>
-              <p className="text-3xl font-bold text-slate-900 mt-1">{data?.installs_28d?.toLocaleString() || '0'}</p>
+            <div className="mt-3 sm:mt-4">
+              <p className="text-xs sm:text-sm font-medium text-slate-500">Installs (28d)</p>
+              <p className="text-xl sm:text-3xl font-bold text-slate-900 mt-1">{data?.installs_28d?.toLocaleString() || '0'}</p>
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
+          <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
             <div className="flex items-center">
-              <div className="p-3 rounded-xl bg-cyan-100">
-                <Activity className="h-6 w-6 text-cyan-600" />
+              <div className="p-2 sm:p-3 rounded-xl bg-cyan-100">
+                <Activity className="h-5 w-5 sm:h-6 sm:w-6 text-cyan-600" />
               </div>
             </div>
-            <div className="mt-4">
-              <p className="text-sm font-medium text-slate-500">Active Users (28d)</p>
-              <p className="text-3xl font-bold text-slate-900 mt-1">{data?.active_users_28d?.toLocaleString() || '0'}</p>
+            <div className="mt-3 sm:mt-4">
+              <p className="text-xs sm:text-sm font-medium text-slate-500">Active Users</p>
+              <p className="text-xl sm:text-3xl font-bold text-slate-900 mt-1">{data?.active_users_28d?.toLocaleString() || '0'}</p>
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
+          <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
             <div className="flex items-center">
-              <div className="p-3 rounded-xl bg-rose-100">
-                <ArrowUpRight className="h-6 w-6 text-rose-600" />
+              <div className="p-2 sm:p-3 rounded-xl bg-rose-100">
+                <ArrowUpRight className="h-5 w-5 sm:h-6 sm:w-6 text-rose-600" />
               </div>
             </div>
-            <div className="mt-4">
-              <p className="text-sm font-medium text-slate-500">Conversion Rate</p>
-              <p className="text-3xl font-bold text-slate-900 mt-1">{data?.conversion_rate ? (data.conversion_rate * 100).toFixed(1) : '0.0'}%</p>
+            <div className="mt-3 sm:mt-4">
+              <p className="text-xs sm:text-sm font-medium text-slate-500">Conv. Rate</p>
+              <p className="text-xl sm:text-3xl font-bold text-slate-900 mt-1">{data?.conversion_rate ? (data.conversion_rate * 100).toFixed(1) : '0.0'}%</p>
             </div>
           </div>
 
-          <div className="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
+          <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-sm border border-slate-100 hover:shadow-md transition-shadow">
             <div className="flex items-center">
-              <div className="p-3 rounded-xl bg-red-100">
-                <AlertCircle className="h-6 w-6 text-red-600" />
+              <div className="p-2 sm:p-3 rounded-xl bg-red-100">
+                <AlertCircle className="h-5 w-5 sm:h-6 sm:w-6 text-red-600" />
               </div>
             </div>
-            <div className="mt-4">
-              <p className="text-sm font-medium text-slate-500">Churn Rate</p>
-              <p className="text-3xl font-bold text-slate-900 mt-1">{data?.churn_rate ? (data.churn_rate * 100).toFixed(1) : '0.0'}%</p>
+            <div className="mt-3 sm:mt-4">
+              <p className="text-xs sm:text-sm font-medium text-slate-500">Churn Rate</p>
+              <p className="text-xl sm:text-3xl font-bold text-slate-900 mt-1">{data?.churn_rate ? (data.churn_rate * 100).toFixed(1) : '0.0'}%</p>
             </div>
           </div>
         </div>

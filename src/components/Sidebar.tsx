@@ -80,7 +80,7 @@ export function Sidebar({ isDemoMode: initialDemoMode }: { isDemoMode: boolean }
         fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-slate-200 text-slate-600 transition-transform duration-300 ease-in-out shadow-xl md:shadow-none md:relative md:translate-x-0 flex flex-col shrink-0
         ${isOpen ? 'translate-x-0' : '-translate-x-full'}
       `}>
-        <div className="hidden md:flex h-20 shrink-0 items-center px-6 border-b border-slate-100 bg-white">
+        <div className="flex h-20 shrink-0 items-center px-6 border-b border-slate-100 bg-white">
           <Image 
             src="/lumodash.png" 
             alt="LumoDash Logo" 
