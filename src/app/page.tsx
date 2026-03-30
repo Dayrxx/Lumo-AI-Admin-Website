@@ -1,8 +1,9 @@
 import { supabaseAdmin } from '@/utils/supabase/admin'
 import { DateRangePicker } from '@/components/DateRangePicker'
 import { getDateRange } from '@/utils/date'
-import { ArrowDownToLine, DollarSign, Users, Activity, TrendingUp } from 'lucide-react'
+import { ArrowDownToLine, DollarSign, Users, Activity, TrendingUp, CheckCircle2 } from 'lucide-react'
 import { cookies } from 'next/headers'
+import { getAppleApps } from '@/utils/apple'
 
 export default async function OverviewPage({
   searchParams,
@@ -20,6 +21,9 @@ export default async function OverviewPage({
   let newSubscriptionsCount = 0
   let estimatedRevenue = 0
   let conversionRate = '0.0'
+
+  // Fetch Apple Apps
+  const appleApps = await getAppleApps()
 
   if (isDemo) {
     // Generate realistic fake data based on range
@@ -145,19 +149,54 @@ export default async function OverviewPage({
           <RecentSignups isDemo={isDemo} />
         </div>
 
-        <div className="bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl shadow-sm p-6 text-white">
-          <h2 className="text-lg font-bold mb-2">Connect Apple App Store</h2>
-          <p className="text-indigo-100 text-sm mb-6">
-            To get exact App Download numbers and official Revenue data, add your Apple App Store Connect API keys to the environment variables.
-          </p>
-          <div className="bg-white/10 rounded-xl p-4 backdrop-blur-sm">
-            <code className="text-xs text-indigo-50">
-              APPLE_ISSUER_ID=...<br/>
-              APPLE_KEY_ID=...<br/>
-              APPLE_PRIVATE_KEY=...
-            </code>
+        {appleApps ? (
+          <div className="bg-white rounded-2xl shadow-sm border border-slate-100 p-6 h-full">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-lg font-bold text-slate-900">App Store Connect</h2>
+              <CheckCircle2 className="h-5 w-5 text-emerald-500" />
+            </div>
+            <div className="space-y-4">
+              <div className="flex items-center gap-3 p-3 bg-emerald-50 text-emerald-700 rounded-xl text-sm font-medium">
+                <span className="flex h-2 w-2 relative">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                </span>
+                Connected successfully
+              </div>
+              <div className="mt-4">
+                <h3 className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-3">Your Apps</h3>
+                <div className="space-y-2">
+                  {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
+                  {appleApps.map((app: any) => (
+                    <div key={app.id} className="flex items-center justify-between p-3 border border-slate-100 rounded-xl">
+                      <div>
+                        <p className="text-sm font-medium text-slate-900">{app.attributes.name}</p>
+                        <p className="text-xs text-slate-500">{app.attributes.bundleId}</p>
+                      </div>
+                      <span className="text-xs font-medium text-slate-400 bg-slate-50 px-2 py-1 rounded-md">
+                        {app.attributes.sku}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className="bg-gradient-to-br from-indigo-500 to-purple-600 rounded-2xl shadow-sm p-6 text-white h-full">
+            <h2 className="text-lg font-bold mb-2">Connect Apple App Store</h2>
+            <p className="text-indigo-100 text-sm mb-6">
+              To get exact App Download numbers and official Revenue data, add your Apple App Store Connect API keys to the environment variables.
+            </p>
+            <div className="bg-white/10 rounded-xl p-4 backdrop-blur-sm">
+              <code className="text-xs text-indigo-50">
+                APPLE_ISSUER_ID=...<br/>
+                APPLE_KEY_ID=...<br/>
+                APPLE_PRIVATE_KEY=...
+              </code>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   )
