@@ -1,5 +1,6 @@
 import { supabaseAdmin } from '@/utils/supabase/admin'
 import { cookies } from 'next/headers'
+import { SubscriptionsClient } from './SubscriptionsClient'
 
 export default async function SubscriptionsPage() {
   const cookieStore = await cookies()
@@ -56,55 +57,7 @@ export default async function SubscriptionsPage() {
         </div>
       </div>
       
-      <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-slate-200">
-            <thead className="bg-slate-50">
-              <tr>
-                <th scope="col" className="py-4 pl-6 pr-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">User</th>
-                <th scope="col" className="px-3 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Status</th>
-                <th scope="col" className="px-3 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Product</th>
-                <th scope="col" className="px-3 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Period</th>
-                <th scope="col" className="px-3 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Expires</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-100 bg-white">
-              {subscriptions?.map((sub) => (
-                <tr key={`${sub.app_user_id}-${sub.created_at}`} className="hover:bg-slate-50/50 transition-colors">
-                  <td className="whitespace-nowrap py-4 pl-6 pr-3">
-                    <div className="font-medium text-slate-900">{sub.email || 'Unknown'}</div>
-                    <div className="text-slate-500 text-xs">{sub.app_user_id?.substring(0, 12)}...</div>
-                  </td>
-                  <td className="whitespace-nowrap px-3 py-4">
-                    <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ring-1 ring-inset ${
-                      sub.is_pro 
-                        ? 'bg-emerald-50 text-emerald-700 ring-emerald-600/20' 
-                        : 'bg-slate-50 text-slate-600 ring-slate-500/10'
-                    }`}>
-                      {sub.is_pro ? 'PRO' : 'FREE'}
-                    </span>
-                  </td>
-                  <td className="whitespace-nowrap px-3 py-4">
-                    <div className="text-sm text-slate-900">{sub.product_identifier || '-'}</div>
-                  </td>
-                  <td className="whitespace-nowrap px-3 py-4">
-                    <div className="text-sm text-slate-900 capitalize">{sub.period_type || '-'}</div>
-                    <div className="text-xs text-slate-500">{sub.will_renew ? 'Auto-renews' : 'Cancels'}</div>
-                  </td>
-                  <td className="whitespace-nowrap px-3 py-4 text-sm text-slate-500">
-                    {sub.expires_date ? new Date(sub.expires_date).toLocaleDateString() : '-'}
-                  </td>
-                </tr>
-              ))}
-              {(!subscriptions || subscriptions.length === 0) && (
-                <tr>
-                  <td colSpan={5} className="px-6 py-8 text-center text-sm text-slate-500">No subscriptions found.</td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <SubscriptionsClient initialSubscriptions={subscriptions} />
     </div>
   )
 }

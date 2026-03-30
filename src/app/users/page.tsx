@@ -1,5 +1,6 @@
 import { supabaseAdmin } from '@/utils/supabase/admin'
 import { cookies } from 'next/headers'
+import { UsersClient } from './UsersClient'
 
 export default async function UsersPage() {
   const cookieStore = await cookies()
@@ -56,58 +57,7 @@ export default async function UsersPage() {
         </div>
       </div>
       
-      <div className="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-slate-200">
-            <thead className="bg-slate-50">
-              <tr>
-                <th scope="col" className="py-4 pl-6 pr-3 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">User</th>
-                <th scope="col" className="px-3 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Demographics</th>
-                <th scope="col" className="px-3 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Goal</th>
-                <th scope="col" className="px-3 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Device</th>
-                <th scope="col" className="px-3 py-4 text-left text-xs font-semibold text-slate-500 uppercase tracking-wider">Joined</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-100 bg-white">
-              {users?.map((person) => (
-                <tr key={person.id} className="hover:bg-slate-50/50 transition-colors">
-                  <td className="whitespace-nowrap py-4 pl-6 pr-3">
-                    <div className="flex items-center">
-                      <div className="h-10 w-10 flex-shrink-0 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-bold">
-                        {person.email?.charAt(0).toUpperCase() || '?'}
-                      </div>
-                      <div className="ml-4">
-                        <div className="font-medium text-slate-900">{person.email || 'Anonymous'}</div>
-                        <div className="text-slate-500 text-xs">{person.id.substring(0, 8)}...</div>
-                      </div>
-                    </div>
-                  </td>
-                  <td className="whitespace-nowrap px-3 py-4">
-                    <div className="text-sm text-slate-900">{person.gender || '-'}</div>
-                    <div className="text-xs text-slate-500">{person.age ? `${person.age} years` : '-'}</div>
-                  </td>
-                  <td className="whitespace-nowrap px-3 py-4">
-                    <span className="inline-flex items-center rounded-full bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
-                      {person.weight_goal || 'None'}
-                    </span>
-                  </td>
-                  <td className="whitespace-nowrap px-3 py-4 text-sm text-slate-500">
-                    {person.device_brand} {person.device_model}
-                  </td>
-                  <td className="whitespace-nowrap px-3 py-4 text-sm text-slate-500">
-                    {new Date(person.created_at).toLocaleDateString()}
-                  </td>
-                </tr>
-              ))}
-              {(!users || users.length === 0) && (
-                <tr>
-                  <td colSpan={5} className="px-6 py-8 text-center text-sm text-slate-500">No profiles found.</td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
-      </div>
+      <UsersClient initialUsers={users} />
     </div>
   )
 }
