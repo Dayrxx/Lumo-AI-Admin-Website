@@ -51,7 +51,7 @@ export function Sidebar({ isDemoMode: initialDemoMode }: { isDemoMode: boolean }
       {/* Mobile Header */}
       <div className="md:hidden flex items-center justify-between bg-white border-b border-slate-200 px-4 py-3 z-30 relative shrink-0">
         <Image 
-          src="/lumodash.png" 
+          src="/lumodash.jpg" 
           alt="LumoDash Logo" 
           width={120} 
           height={32} 
@@ -82,7 +82,7 @@ export function Sidebar({ isDemoMode: initialDemoMode }: { isDemoMode: boolean }
       `}>
         <div className="flex h-20 shrink-0 items-center px-6 border-b border-slate-100 bg-white">
           <Image 
-            src="/lumodash.png" 
+            src="/lumodash.jpg" 
             alt="LumoDash Logo" 
             width={150} 
             height={40} 
